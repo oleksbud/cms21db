@@ -9,5 +9,7 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
     public void Configure(EntityTypeBuilder<Vehicle> builder)
     {
         builder.Property(x => x.Name).IsRequired();
+        builder.Property(x => x.Brand).IsRequired();
+        builder.Property(x => x.ProductionYear).IsRequired();
     }
 }

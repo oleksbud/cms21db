@@ -1,0 +1,58 @@
+﻿[
+  {
+    "Brand": "Tempest",
+    "Name": "Magnum",
+    "ProductionYear": "1968",
+    "Design": "The Magnum is based on the first generation of the Dodge Charger Daytona introduced in 1969.",
+    "Dlc": ""
+  },
+  {
+    "Brand": "Emden",
+    "Name": "Jager",
+    "ProductionYear": "1983",
+    "Design": "The Jager is mostly based on the second generation of the Volkswagen Golf introduced in 1983. The front and rear lights resemble ones from the Lancia Delta HF.",
+    "Dlc": ""
+  },
+  {
+    "Brand": "Ribbsan",
+    "Name": "Starline",
+    "ProductionYear": "1998",
+    "Design": "The Starline is based on the tenth generation of the Nissan Skyline introduced in 1998.",
+    "Dlc": ""
+  },
+  {
+    "Brand": "Hinata",
+    "Name": "Kagura SX",
+    "ProductionYear": "2000",
+    "Design": "The Kagura SX is based on the seventh generation of the Mitsubishi Lancer Evolution VII introduced in 2001.",
+    "Dlc": ""
+  },
+  {
+    "Brand": "Hinata",
+    "Name": "Moon MK1",
+    "ProductionYear": "1999",
+    "Design": "The Moon Mk1 is based on the second generation of the Mitsubishi Eclipse introduced in 1994.",
+    "Dlc": ""
+  },
+  {
+    "Brand": "Aston Martin",
+    "Name": "Vantage",
+    "ProductionYear": "2019",
+    "Design": "Aston Martin Vantage 2019",
+    "Dlc": "Aston Martin DLC"
+  },
+  {
+    "Brand": "Bolt",
+    "Name": "Supernova",
+    "ProductionYear": "1969",
+    "Design": "The Supernova is based on the third generation of the Chevrolet Chevy II Nova Coupe introduced in 1967.",
+    "Dlc": ""
+  },
+  {
+    "Brand": "Katagiri",
+    "Name": "Tamago",
+    "ProductionYear": "1992",
+    "Design": "The Tamago is based on the sixth generation of the Honda Civic Hatchback introduced in 1991.",
+    "Dlc": ""
+  }
+]
