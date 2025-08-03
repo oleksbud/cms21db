@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,36 +9,42 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class VehiclesController(IVehicleRepository repo) : ControllerBase
+public class VehiclesController(IGenericRepository<Vehicle> repo) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Vehicle>>> GetVehicles(string? brand, string? sort)
     {
-        return Ok(await repo.GetVehiclesAsync(brand, sort));
+        var spec = new VehicleSpecification(brand, sort);
+
+        var vehicles = await repo.GetAllWithSpec(spec);
+        
+        return Ok(vehicles);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Vehicle>> GetVehicle(int id)
     {
-        var vehicle = await repo.GetVehicleByIdAsync(id);
+        var vehicle = await repo.GetByIdAsync(id);
         
         if (vehicle == null) return NotFound();
-        
+         
         return vehicle;
     }
 
     [HttpGet("brands")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
     {
-        return Ok(await repo.GetBrandsAsync());
+        var spec = new BrandListSpecification();
+        var brands = await repo.GetAllWithSpec(spec);
+        return Ok(brands);
     }
 
     [HttpPost]
     public async Task<ActionResult<Vehicle>> AddVehicle(Vehicle vehicle)
     {
-        repo.AddVehicle(vehicle);
+        repo.Add(vehicle);
 
-        if (await repo.SaveChangesAsync())
+        if (await repo.SaveAsync())
         {
             return CreatedAtAction("AddVehicle", new {id = vehicle.Id}, vehicle);
         }
@@ -50,9 +57,9 @@ public class VehiclesController(IVehicleRepository repo) : ControllerBase
     {
         if (id != vehicle.Id || !VehicleExists(id)) return BadRequest();
         
-        repo.UpdateVehicle(vehicle);
+        repo.Update(vehicle);
         
-        if (await repo.SaveChangesAsync())
+        if (await repo.SaveAsync())
         {
             return NoContent();
         }
@@ -63,13 +70,13 @@ public class VehiclesController(IVehicleRepository repo) : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteVehicle(int id)
     {
-        var vehicle = await repo.GetVehicleByIdAsync(id);
+        var vehicle = await repo.GetByIdAsync(id);
         
         if (vehicle == null) return NotFound();
         
-        repo.DeleteVehicle(vehicle);
+        repo.Delete(vehicle);
         
-        if (await repo.SaveChangesAsync())
+        if (await repo.SaveAsync())
         {
             return NoContent();
         }
@@ -79,6 +86,6 @@ public class VehiclesController(IVehicleRepository repo) : ControllerBase
 
     private bool VehicleExists(int id)
     {
-        return repo.VehicleExists(id);
+        return repo.Exists(id);
     }
 }
