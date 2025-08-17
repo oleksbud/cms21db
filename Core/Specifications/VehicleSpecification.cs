@@ -4,11 +4,14 @@ namespace Core.Specifications;
 
 public class VehicleSpecification : BaseSpecification<Vehicle>
 {
-    public VehicleSpecification(string? brand, string? sort) : base(x =>
-        (string.IsNullOrWhiteSpace(brand) || x.Brand == brand)
+    public VehicleSpecification(VehicleSpecParams specParams) : base(x =>
+        (string.IsNullOrWhiteSpace(specParams.Search) || x.Name.Contains(specParams.Search.ToLower())) &&
+        (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Brand))
         )
     {
-        switch (sort)
+        ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
+        
+        switch (specParams.Sort)
         {
             case "brand":
                 AddOrderBy(x => x.Brand);

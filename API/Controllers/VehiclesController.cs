@@ -1,24 +1,22 @@
-﻿using Core.Entities;
+﻿using API.RequestHelpers;
+using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class VehiclesController(IGenericRepository<Vehicle> repo) : ControllerBase
+public class VehiclesController(IGenericRepository<Vehicle> repo) : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<Vehicle>>> GetVehicles(string? brand, string? sort)
+    public async Task<ActionResult<IReadOnlyList<Pagination<Vehicle>>>> GetVehicles(
+    [FromQuery] VehicleSpecParams specParams)
     {
-        var spec = new VehicleSpecification(brand, sort);
-
-        var vehicles = await repo.GetAllWithSpec(spec);
+        var spec = new VehicleSpecification(specParams);
         
-        return Ok(vehicles);
+        return Ok(await CreatePagedResult<Vehicle>(repo, spec, specParams.PageIndex, specParams.PageSize));
     }
 
     [HttpGet("{id:int}")]
