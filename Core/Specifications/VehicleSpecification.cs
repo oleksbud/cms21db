@@ -9,8 +9,11 @@ public class VehicleSpecification : BaseSpecification<Vehicle>
         (specParams.Brands.Count == 0 || specParams.Brands.Contains(x.Brand))
         )
     {
-        ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
-        
+        if (specParams.PageSize > 0)
+        {
+            ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
+        }
+
         switch (specParams.Sort)
         {
             case "brand":
